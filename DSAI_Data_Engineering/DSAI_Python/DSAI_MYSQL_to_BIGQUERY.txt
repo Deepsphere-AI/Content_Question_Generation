@@ -1,0 +1,68 @@
+########################################################
+
+#Copyright (c) DeepSphere.AI 2021
+
+# All rights reserved
+
+# We are sharing this partial code for learning and research, and the idea behind us sharing the source code is to stimulate ideas #and thoughts for the learners to develop their MLOps.
+
+# Author: # DeepSphere.AI | deepsphere.ai | dsschoolofai.com | info@deepsphere.ai
+
+# Release: Initial release
+
+#######################################################
+
+
+import sys 
+
+import mysql.connector
+
+import mysql.connector
+
+from mysql.connector import Error
+
+import pandas as vAR_pd
+
+vAR_conn = ""
+
+vAR_conn = mysql.connector.connect(host="66.42.60.177",database = "dssaiai_lms_structure",user = "dssaiai_struct_u",password = "~z=wL1jg~Q4$",port=3306)
+
+#if vAR_conn.is_connected():
+    
+    #print("Connected to MySQL Database Successfully")
+    
+    #except Error as e:
+        
+        #print(e)
+    
+vAR_cursor = vAR_conn.cursor()
+
+#vAR_cursor = vAR_conn.cursor()
+
+print('Cursor Opened')
+
+# # Export form MySQL Database
+
+# In[ ]:
+
+
+vAR_Query = vAR_cursor.execute("SELECT * FROM dsai_ilms_view WHERE user_original_id = '"+sys.argv[1]+"' AND learning_path_original_id = '"+sys.argv[2]+"' AND unit_original_id = '"+sys.argv[3]+"'")
+
+vAR_df = vAR_pd.DataFrame(vAR_cursor.fetchall(),columns=['student_id','user_original_id','roll_no','student_name','is_demo','teacher_id','teacher_name',
+                                                     'learning_path_name','learning_path_major','learning_path_id','learning_path_original_id','learning_path_grade',
+                                                     'learning_path_status','course_id','course_name','unit_id','unit_original_id','unit_name','assesment_code',
+                                                     'user_id','quiz_score','assignment_score','assesment_grade'])
+
+#vAR_df
+
+
+# # Import into Google BigQuery
+
+# In[ ]:
+
+
+from pandas.io import gbq
+
+vAR_df.to_gbq(destination_table='big-query-testdp-328205.Student_MySQLto_BQ.Student_MySQLto_BQ',project_id='big-query-testdp-328205',if_exists='replace')
+                                
+print("Export Successful")

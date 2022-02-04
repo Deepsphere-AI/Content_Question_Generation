@@ -1,0 +1,102 @@
+
+______________________________________________________________________________________________
+
+Student Progress_Course
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_progress_report_course`(IN `sid` INT, IN `lpid` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_unit_wise_data` (student_id, student_name, student_no, is_demo, teacher_id, teacher_name, learning_path_name, learning_path_major, learning_path_id, learning_path_grade, learning_path_status, course_id, course_name,  unit_id, unit_name, assesment_code, user_id, quiz_score,assignment_score,assesment_grade) SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Student Progress_Unit
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_progress_report_unit`(IN `sid` INT, IN `lpid` INT, IN `uname` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_unit_wise_data`SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid AND unit_name = uname$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Student Participation_Course
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_participation_report_course`(IN `sid` INT, IN `lpid` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_student_learning` SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Student Participation_Unit
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_participation_report_unit`(IN `sid` INT, IN `lpid` INT, IN `uname` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_unit_wise_data`SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid AND unit_name = uname$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Student recommendation_Course
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_student_recommendation_report_course`(IN `sid` INT, IN `lpid` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_student_learning_recommendation`SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Student recommendation_Unit
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_student_recommendation_report_unit`(IN `sid` INT, IN `lpid` INT, IN `uname` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_student_learning_recommendation`SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid AND unit_name = uname$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Parent recommendation_Course
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_parent_recommendation_report_course`(IN `sid` INT, IN `lpid` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_parent_recommendation_course` SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Parent recommendation_Unit
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_parent_recommendation_report_unit`(IN `sid` INT, IN `lpid` INT, IN `uname` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_parent_recommendation_unit`SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid AND unit_name = uname$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Teacher Insights_Course
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_teacher_insights_report_course`(IN `sid` INT, IN `lpid` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_teacher_insights_course`SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid$$
+DELIMITER ;
+
+______________________________________________________________________________________________
+
+Teacher Insights_Unit
+
+DELIMITER $$
+CREATE DEFINER=`dssaiai`@`localhost` PROCEDURE `dsai_stored_proc_teacher_insights_report_unit`(IN `sid` INT, IN `lpid` INT, IN `uname` INT)
+    NO SQL
+INSERT INTO `dsai_ilms_teacher_insights_course`SELECT * FROM dsai_ilms_view WHERE student_id = sid AND learning_path_id = lpid AND unit_name = uname$$
+DELIMITER ;
+
+______________________________________________________________________________________________

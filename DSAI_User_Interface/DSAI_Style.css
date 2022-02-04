@@ -1,0 +1,197 @@
+########################################################
+
+#Copyright (c) DeepSphere.AI 2021
+
+# All rights reserved
+
+# We are sharing this partial code for learning and research, and the idea behind us sharing the source code is to stimulate ideas #and thoughts for the learners to develop their MLOps.
+
+# Author: # DeepSphere.AI | deepsphere.ai | dsschoolofai.com | info@deepsphere.ai
+
+# Release: Initial release
+
+#######################################################
+
+
+/* buttons */
+.stButton>button {
+   background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+    width: 320px;
+    height: 70px;
+}
+
+.css-hi6a2p{
+    padding-bottom: 10px;
+}
+/* sidebar dropdown padding */
+/* .css-z8kais { */
+.css-1l02zno{
+    padding-bottom: 100px;
+}
+.row-widget .stSelectbox{
+    padding-bottom: 100px;
+}
+/* copy selector instead of xpath */
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1l02zno.e1fqkh3o1 > div.block-container.css-1dnb06j.eknhn3m2 > div:nth-child(1) > div:nth-child(3)
+{
+    padding-bottom:30px;
+}
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1l02zno.e1fqkh3o1 > div.block-container.css-1dnb06j.eknhn3m2 > div:nth-child(1) > div:nth-child(2)
+{
+    padding-bottom:30px;
+}
+
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1l02zno.e1fqkh3o1 > div.block-container.css-1dnb06j.eknhn3m2 > div:nth-child(1) > div:nth-child(1)
+
+{
+    padding-bottom:30px;
+}
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1l02zno.e1fqkh3o1 > div.block-container.css-1dnb06j.eknhn3m2 > div:nth-child(1) > div:nth-child(4){
+   padding-bottom:30px; 
+}    
+/* title */
+.css-h2raq8>h2{
+    width:110%;
+    text-align: center;
+}
+/* sidebar width reduce */
+.css-1l02zno{
+    color: black;
+    background-color: #2e5cb8;
+    width: 17rem;
+}
+/* Main page */
+.reportview-container {
+        background: solid white;
+    }
+img {
+  position: absolute;
+  left: 100px;
+  top: -100px;
+  width: 500px;
+  height: 200px;
+  padding-top: 20px;
+  padding-bottom: 70px;
+  /* display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 150px; */
+}
+.st-dt {
+    background-color: grey;
+}
+.st-ds {
+    color: white;
+}
+
+.css-7po9eu {
+    flex: 1 1 25%;
+    width: 2px;
+    padding-left: 0.3rem;
+}
+
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1l02zno.e1fqkh3o1 > div.block-container.css-1dnb06j.eknhn3m2 > div:nth-child(1) > div:nth-child(1){
+    background-color: #32CD32;
+    /* background-color: red; */
+  border: none;
+  color: black;
+/*   padding-bottom:30px; */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+    width: 234px;
+    height: 49px;
+    position: absolute;
+  left: 0px;
+  top: 380px;
+    border-radius: 3px;
+}    
+
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1l02zno.e1fqkh3o1 > div.block-container.css-1dnb06j.eknhn3m2 > div:nth-child(1) > div:nth-child(1) > div > div > p > a{
+    text-decoration:none;
+    
+}
+p, ol, ul, dl {
+    margin: 13px 0px 1rem;
+    padding: 0px;
+    font-size: 1rem;
+    font-weight: 400;
+    
+}
+
+/* .css-h2raq8>h2 {
+    width: 110%;
+    text-align: center;
+    font-weight: bold;
+    padding-right: 280px;
+    padding-top: 50px; 
+} */
+.css-gztghi {
+    position: relative;
+    width: 698px;
+    padding-bottom: 40px;
+}
+.st-e0 {
+    border-left-color: black;
+}
+.st-e1 {
+    border-right-color: black;
+}
+.st-e2 {
+    border-top-color: black;
+}
+.st-e3 {
+    border-bottom-color: black;
+}
+/* #root > div:nth-child(1) > div > div > div > div > section.main.css-1v3fvcr.eknhn3m1 > div > div:nth-child(1) > div:nth-child(3) > div > div > h2{
+    height:100px;
+    width:100%;
+    padding-right:5rem;
+} */
+
+.css-h2raq8>h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+.css-hi6a2p {
+    flex: 1 1 0%;
+    width: 100%;
+    padding: 5rem 0rem 0rem;
+    max-width: 720px;
+}
+iframe {
+    height: 430px !important;
+}
+/* .text-center {
+    text-align: center!important;
+    position: relative;
+    top: 52rem;
+} */
+/* made with streamlit icon css changes */
+/* .css-8xv65a {
+    display: block;
+    color: rgba(38, 39, 48, 0.4);
+    flex: 0 1 0%;
+    font-size: 0.8rem;
+    max-width: 730px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    top: 800px;
+    position: absolute;
+} */
