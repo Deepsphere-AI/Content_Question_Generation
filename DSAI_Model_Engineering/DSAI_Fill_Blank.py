@@ -1,19 +1,3 @@
-########################################################
-
-#Copyright (c) DeepSphere.AI 2021
-
-# All rights reserved
-
-# We are sharing this partial code for learning and research, and the idea behind us sharing the source code is to stimulate ideas #and thoughts for the learners to develop their MLOps.
-
-# Author: # DeepSphere.AI | deepsphere.ai | dsschoolofai.com | info@deepsphere.ai
-
-# Release: Initial release
-
-#######################################################
-
-
-
 import streamlit as st
 import json
 import requests
@@ -26,7 +10,7 @@ import base64
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('punkt')
-import pke
+# import pke
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet
 import traceback
@@ -34,9 +18,8 @@ from pprint import pprint
 # from nltk.tokenize import sent_tokenize
 from flashtext import KeywordProcessor
 from datetime import datetime
+import yake
 
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
 
 def file_selector_fill():
     vAR_file = st.file_uploader('Upload the text file',type=['txt'],key='2')
@@ -44,9 +27,9 @@ def file_selector_fill():
         vAR_text = vAR_file.read().decode("utf-8").strip()
         st.write('File Content: '+ vAR_text)
         return vAR_text
+
     
-    
-    
+
 def get_context_fill(quest,answers,unit,grade,title):
     return {
       "unit": unit,
@@ -59,101 +42,26 @@ def get_context_fill(quest,answers,unit,grade,title):
 
   }
 
-# keyword extraction using pke's TopicRank Algorithm
+# keyword extraction using pke's MultipartiteRank Algorithm
 # Working principle of MultipartiteRank Algorithm - https://www.aclweb.org/anthology/N18-2105.pdf
-@st.cache(show_spinner=False)
-# def get_noun_adj_verb(text_content):
-#       # define the set of valid Part-of-Speeches
-#   pos = {'NOUN', 'PROPN', 'ADJ'}
-
-#   # 1. create a SingleRank extractor.
-#   extractor = pke.unsupervised.SingleRank()
-
-#   # 2. load the content of the document.
-#   extractor.load_document(input=text_content,
-#                           language='en',
-#                           normalization=None)
-
-#   # 3. select the longest sequences of nouns and adjectives as candidates.
-#   extractor.candidate_selection(pos=pos)
-
-#   # 4. weight the candidates using the sum of their word's scores that are
-#   #    computed using random walk. In the graph, nodes are words of
-#   #    certain part-of-speech (nouns and adjectives) that are connected if
-#   #    they occur in a window of 10 words.
-#   extractor.candidate_weighting(window=10,
-#                                 pos=pos)
-
-#   # 5. get the 10-highest scored candidates as keyphrases
-#   keyphrases = extractor.get_n_best(n=20)
-#   keyphrases_res = zip(*keyphrases)
-#   keyphrases = list(list(keyphrases_res)[0])
-#   #The below block of code written for substring removal of keywords
-#   z = []
-#   keyphrases.sort()
-# #   print(keyphrases)
-#   for x, y in zip(keyphrases, keyphrases[1:]):
-#     print(x, y)
-#     if fuzz.partial_ratio(x,y)!=100:
-#       z.append(x)
-#   return z
-# def get_noun_adj_verb(text):
-    # vAR_out=[]
-    # try:
-    #     # pos = {'NOUN'}
-    #     vAR_extractor = pke.unsupervised.TopicRank()
-    #     vAR_extractor.load_document(input=text_content)
-    #     vAR_pos = {'NOUN', 'PROPN', 'ADJ'}
-    #     vAR_stoplist = list(string.punctuation)
-    #     vAR_stoplist += ['-lrb-', '-rrb-', '-lcb-', '-rcb-', '-lsb-', '-rsb-']
-    #     vAR_stoplist += stopwords.words('english')
-    #     vAR_extractor.candidate_selection(pos=vAR_pos, stoplist=vAR_stoplist)
-    #     vAR_extractor.candidate_weighting(threshold=0.74, method='average')
-    #     vAR_keyphrases = vAR_extractor.get_n_best(n=20)
+# @st.cache(show_spinner=False)
+def get_noun_adj_verb(text_content):
+    vAR_out=[]
+    try:
         
-    #     for val in vAR_keyphrases:
-    #         vAR_out.append(val[0])
-    # except BaseException as e:
-    #     print(e)
-    # z = []
-    # vAR_out.sort()
-    # #   print(keyphrases)
-    # for x, y in zip(vAR_out, vAR_out[1:]):
-    #     if fuzz.partial_ratio(x,y)!=100:
-    #         z.append(x)
-    # return z
-def get_noun_adj_verb_sr(text):
-  # define the set of valid Part-of-Speeches
-  pos = {'NOUN', 'PROPN', 'ADJ'}
+        
+        kw_yake = yake.KeywordExtractor(top=10,lan="en", n=3, dedupLim=0.3)
+        keywords_yake = kw_yake.extract_keywords(text_content)
+        for val in keywords_yake:
+            vAR_out.append(val[0])
+            
+        
+    except:
+        vAR_out = []
+        traceback.print_exc()
+    
 
-  # 1. create a SingleRank extractor.
-  extractor = pke.unsupervised.SingleRank()
-
-  # 2. load the content of the document.
-  extractor.load_document(input=text,
-                          language='en',
-                          normalization=None)
-
-  # 3. select the longest sequences of nouns and adjectives as candidates.
-  extractor.candidate_selection(pos=pos)
-
-  # 4. weight the candidates using the sum of their word's scores that are
-  #    computed using random walk. In the graph, nodes are words of
-  #    certain part-of-speech (nouns and adjectives) that are connected if
-  #    they occur in a window of 10 words.
-  extractor.candidate_weighting(window=10,
-                                pos=pos)
-
-  # 5. get the 10-highest scored candidates as keyphrases
-  keyphrases = extractor.get_n_best(n=40)
-  keyphrases_res = zip(*keyphrases)
-  keyphrases = list(list(keyphrases_res)[0])
-  z = []
-  keyphrases.sort()
-  for x, y in zip(keyphrases, keyphrases[1:]):
-    if fuzz.partial_ratio(x,y)!=100:
-        z.append(x)
-  return z
+    return vAR_out
 # def get_noun_adj_verb(text_content):
 #     out=[]
 #     try:
@@ -170,7 +78,7 @@ def get_noun_adj_verb_sr(text):
 #                               pos=pos,
 #                               top_percent=0.33)
 #         keyphrases = extractor.get_n_best(n=20)
-        
+
 #         for val in keyphrases:
 #             out.append(val[0])
 #     except BaseException as e:
@@ -192,7 +100,7 @@ def get_noun_adj_verb_sr(text):
 #                                       threshold=0.75,
 #                                       method='average')
 #         keyphrases = extractor.get_n_best(n=20)
-        
+
 #         for val in keyphrases:
 #             out.append(val[0])
 #     except:
@@ -201,71 +109,35 @@ def get_noun_adj_verb_sr(text):
 
 #     return out
 # def get_noun_adj_verb(text):
-    # vAR_out=[]
-    # try:
-    #     vAR_extractor = pke.unsupervised.YAKE()
-    #     vAR_extractor.load_document(input=text)
-    #     # pos = {'VERB', 'ADJ', 'NOUN'}
-    #     vAR_pos ={'NOUN','VERB', 'ADJ'}
-    #     vAR_stoplist = list(string.punctuation)
-    #     vAR_stoplist += ['-lrb-', '-rrb-', '-lcb-', '-rcb-', '-lsb-', '-rsb-']
-    #     vAR_stoplist += stopwords.words('english')
-    #     vAR_extractor.candidate_selection(n=2,pos=vAR_pos, stoplist=vAR_stoplist)
+#     vAR_out=[]
+#     try:
+#         vAR_extractor = pke.unsupervised.YAKE()
+#         vAR_extractor.load_document(input=text)
+#         # pos = {'VERB', 'ADJ', 'NOUN'}
+#         vAR_pos ={'NOUN','VERB', 'ADJ'}
+#         vAR_stoplist = list(string.punctuation)
+#         vAR_stoplist += ['-lrb-', '-rrb-', '-lcb-', '-rcb-', '-lsb-', '-rsb-']
+#         vAR_stoplist += stopwords.words('english')
+#         vAR_extractor.candidate_selection(n=2,pos=vAR_pos, stoplist=vAR_stoplist)
 
-    #     vAR_extractor.candidate_weighting(window=3,
-    #                                   stoplist=vAR_stoplist,
-    #                                   use_stems=False)
+#         vAR_extractor.candidate_weighting(window=3,
+#                                       stoplist=vAR_stoplist,
+#                                       use_stems=False)
 
-    #     vAR_keyphrases = vAR_extractor.get_n_best(n=20)
-        
+#         vAR_keyphrases = vAR_extractor.get_n_best(n=20)
 
-    #     for val in vAR_keyphrases:
-    #         vAR_out.append(val[0])
-    # except:
-    #     vAR_out = []
-    #     traceback.print_exc()
-    # z = []
-    # vAR_out.sort()
-    # #   print(keyphrases)
-    # for x, y in zip(vAR_out, vAR_out[1:]):
-    #     if fuzz.partial_ratio(x,y)!=100:
-    #         z.append(x)
-    # return z
-@st.cache(show_spinner=False)
-def get_noun_adj_verb(text):
-  # 1. create a WINGNUS extractor.
-  extractor = pke.supervised.WINGNUS()
 
-  # 2. load the content of the document.
-  extractor.load_document(input=text)
+#         for val in vAR_keyphrases:
+#             vAR_out.append(val[0])
+#     except:
+#         vAR_out = []
+#         traceback.print_exc()
 
-  # 3. select simplex noun phrases as candidates.
-  extractor.candidate_selection()
+#     return vAR_out
 
-  # 4. classify candidates as keyphrase or not keyphrase.
-  df = pke.load_document_frequency_file(input_file='df-semeval2010.tsv.gz')
-  model_file = 'WINGNUS-semeval2010.py3.pickle'
-  extractor.candidate_weighting( model_file=model_file, df=df)
-
-  # 5. get the 10-highest scored candidates as keyphrases
-  keyphrases = extractor.get_n_best(n=40)
-  wingnus_res = zip(*keyphrases)
-  keyphrases = list(list(wingnus_res)[0])
-  z = []
-  keyphrases.sort()
-  for x, y in zip(keyphrases, keyphrases[1:]):
-    if fuzz.partial_ratio(x,y)!=100:
-        z.append(x)
-  z = set(z)
-  sr = set(get_noun_adj_verb_sr(text))
-  common = sr.intersection(z)
-  print('-----------------Keywords from Single Rank in FIB---------------------\n',sr)
-  print('-----------------Keywords from wingnus in FIB---------------------\n',z)
-  print('-----------------Common Keywords from both in FIB---------------------\n',common)
-  return common
 
 # Identify and matching sentence for each keyword
-@st.cache(show_spinner=False)
+# @st.cache(show_spinner=False)
 def get_sentences_for_keyword(vAR_keywords, vAR_sentences):
     vAR_keyword_processor = KeywordProcessor()
     vAR_keyword_sentences = {}
@@ -273,7 +145,7 @@ def get_sentences_for_keyword(vAR_keywords, vAR_sentences):
         vAR_keyword_sentences[word] = []
         vAR_keyword_processor.add_keyword(word)
     for sentence in vAR_sentences:
-        if len(sentence)>50 and len(sentence)<150:
+        if len(sentence)>50 and len(sentence)<250:
             sentence = re.sub(".*:","",sentence)
             sentence = re.sub("\d.","",sentence)
             vAR_keywords_found = vAR_keyword_processor.extract_keywords(sentence)
@@ -281,16 +153,15 @@ def get_sentences_for_keyword(vAR_keywords, vAR_sentences):
                 vAR_keyword_sentences[key].append(sentence)
 
     for key in vAR_keyword_sentences.keys():
-        vAR_values = vAR_keyword_sentences[key]
-        vAR_values = sorted(vAR_values, key=len, reverse=True)
-        vAR_keyword_sentences[key] = vAR_values
-        print('sentences --------------- ',vAR_keyword_sentences)
+        values = vAR_keyword_sentences[key]
+        values = sorted(values, key=len, reverse=True)
+        vAR_keyword_sentences[key] = values
     return vAR_keyword_sentences
 
 
 
 # Handling case sensitive and removing duplicate keywords
-@st.cache(show_spinner=False)
+# @st.cache(show_spinner=False)
 def get_fill_in_the_blanks(vAR_sentence_mapping):
     vAR_out={"title":"Fill in the blanks for these sentences with matching words at the top"}
     vAR_blank_sentences = []
@@ -308,6 +179,6 @@ def get_fill_in_the_blanks(vAR_sentence_mapping):
                 vAR_blank_sentences.append(vAR_line)
                 vAR_processed.append(vAR_sentence_mapping[key][0])
                 vAR_keys.append(key)
-    vAR_out["sentences"]=vAR_blank_sentences[:20]
-    vAR_out["keys"]=vAR_keys[:20]
+    vAR_out["sentences"]=vAR_blank_sentences[:10]
+    vAR_out["keys"]=vAR_keys[:10]
     return vAR_out
